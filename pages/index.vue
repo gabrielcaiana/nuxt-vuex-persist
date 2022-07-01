@@ -2,6 +2,10 @@
   <div
     class="bg-gray-900 w-screen h-screen flex flex-col items-center justify-center"
   >
+    <div class="flex flex-col gap-1 text-white text-center mb-4">
+      <span class="text-xl text-gray-100" v-text="user.name"></span>
+      <span class="text-sm text-gray-400" v-text="user.email"></span>
+    </div>
     <div class="bg-gray-800 rounded-md p-6 h-3/5">
       <form
         class="flex gap-2 border-b border-gray-500 pb-4"
@@ -35,18 +39,32 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 export default {
   name: 'IndexPage',
   data() {
     return {
-      list: [],
       text: '',
     }
   },
 
+  computed: {
+    ...mapGetters({
+      list: 'tasks/getTasks',
+      user: 'user/getUser',
+    }),
+  },
+
+  mounted() {
+    this.$store.commit('user/SET_USER', {
+      name: 'Gabriel Caiana',
+      email: 'gabrielcaiana.dev@gmail.com',
+    })
+  },
+
   methods: {
     onSubmit() {
-      this.list.push(this.text)
+      this.$store.commit('tasks/SET_TASKS', this.text)
       this.text = ''
     },
   },

@@ -3,7 +3,7 @@ import VuexPersistence from 'vuex-persist'
 
 export default ({ store }) => {
   new VuexPersistence({
-    storage: window.localStorage,
+    storage: window.sessionStorage,
     key: 'persistedState', // optional
     modules: ['tasks'],
   }).plugin(store)
